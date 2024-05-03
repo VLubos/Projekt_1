@@ -8,10 +8,11 @@
 
 #import ...
 
-print("$ python projekt1.py")
+print("$ python projekt1.py") #uvítání a přihlášení
 userID = input("Hi, please enter your user ID: ")
 password = input("Enter your password: ")
-RegisteredUserIDs = ["bob", "ann", "mike", "liz"]
+
+RegisteredUserIDs = ["bob", "ann", "mike", "liz"] #definice proměnných
 RegisteredPasswords = ["123", "pass123", "password123", "pass123"]
 cara = 20*"-"
 TEXTS = ['''
@@ -47,41 +48,45 @@ slovoVelkymi = 0
 slovoMalymi = 0
 pocetCisel = 0
 soucetCisel = 0
-if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUserIDs.index(userID)]:
+
+if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUserIDs.index(userID)]: #kontrola uživatele
     print(
         f"{cara}\n"
-        f"Welcome to the app, {userID}\nWe have 3 texts to be analyzed.\n"
+        f"Welcome to the app, {userID}\nWe have {len(TEXTS)} texts to be analyzed.\n"
         f"{cara}"
         )
-    choice = input("Enter a number btw. 1 and 3 to select: ")
-    if choice == "1" or choice == "2" or choice == "3":
-        upravenyText = TEXTS[(int(choice)-1)].replace("\n","").replace(".","").replace(",","")
+    
+    choice = input(f"Enter a number btw. 1 and {len(TEXTS)} to select: ") #volba textu    
+    if choice in range(1, len(TEXTS)):
+        upravenyText = TEXTS[(int(choice)-1)].replace("\n"," ").replace("."," ").replace(","," ") #úprava zvoleného textu
         vybranyText = upravenyText.split(" ")
         for slovo in vybranyText:
             if slovo.isalpha() == False and slovo.isnumeric() == False:
                 vybranyText.remove(slovo)
-        pocetSlov = len(vybranyText)
-        delkySlov = dict()
+        pocetSlov = len(vybranyText) #stanovení počtu slov v textu
+
+        delkySlov = dict()     
         for slovo in vybranyText:
-            delkaSlova = len(slovo)
+            delkaSlova = len(slovo) #analýza délky slov  
             if delkaSlova in delkySlov:
                delkySlov[delkaSlova] += 1
             else:
                 delkySlov[delkaSlova] = 1
-        for slovo in vybranyText:
-            if slovo[0].isupper():
+        
+            if slovo[0].isupper(): #zjištění počtu slov začínajících velkým písmenem
                 zacatecniVelkePismeno += 1
-        for slovo in vybranyText:
-            if slovo.isnumeric():
+        
+            if slovo.isnumeric(): #zjištění počtu čísel v textu
                 pocetCisel += 1
                 soucetCisel += int(slovo)
-        for slovo in vybranyText:
-            if slovo.islower():
+        
+            if slovo.islower(): #zjištění počtu slov začínajících malým písmenem
                 slovoMalymi += 1
-        for slovo in vybranyText:
-            if slovo.isupper():
+        
+            if slovo.isupper(): #zjištění počtu slov psaných velkým písmem
                 slovoVelkymi += 1
 
+        #vypsání výsledků analýzy uživateli 
         print (
         f"{cara}\n"
         f"There are {pocetSlov} words in the selected text.\n"
@@ -96,14 +101,15 @@ if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUse
         delkySlovSerazene = dict(sorted(delkySlov.items()))
         for k,v in delkySlovSerazene.items():
             hvezdicky = v*"*"
-
             print(f"{k:>3}|{hvezdicky:>20}|{v}")
-    else:
+
+    else: #volba textu - neplatná volba
         print("Sorry, your choice was invalid")
+        exit()
 
-
-elif userID not in RegisteredUserIDs or password not in RegisteredPasswords or password != RegisteredPasswords[RegisteredUserIDs.index(userID)]:
+elif userID not in RegisteredUserIDs or password not in RegisteredPasswords or password != RegisteredPasswords[RegisteredUserIDs.index(userID)]: #kontrola uživatele - neregistrovaný uživatel
     print(f"username:{userID}\npassword:{password}\nunregistered user, terminating the program..")
+    exit()
 
 
 
