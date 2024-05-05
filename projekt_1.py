@@ -56,13 +56,14 @@ if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUse
         f"{cara}"
         )
     
-    choice = input(f"Enter a number btw. 1 and {len(TEXTS)} to select: ") #volba textu    
-    if choice in range(1, len(TEXTS)):
-        upravenyText = TEXTS[(int(choice)-1)].replace("\n"," ").replace("."," ").replace(","," ") #úprava zvoleného textu
+    choice = int(input(f"Enter a number btw. 1 and {len(TEXTS)} to select: ")) #volba textu    
+    if choice in range(1, (len(TEXTS)+1)):
+        upravenyText = TEXTS[(int(choice)-1)].replace("\n"," ").replace(".","").replace(",","") #úprava zvoleného textu
         vybranyText = upravenyText.split(" ")
         for slovo in vybranyText:
-            if slovo.isalpha() == False and slovo.isnumeric() == False:
+            if len(slovo) == 0:
                 vybranyText.remove(slovo)
+        
         pocetSlov = len(vybranyText) #stanovení počtu slov v textu
 
         delkySlov = dict()     
@@ -73,7 +74,7 @@ if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUse
             else:
                 delkySlov[delkaSlova] = 1
         
-            if slovo[0].isupper(): #zjištění počtu slov začínajících velkým písmenem
+            if slovo.istitle(): #zjištění počtu slov začínajících velkým písmenem
                 zacatecniVelkePismeno += 1
         
             if slovo.isnumeric(): #zjištění počtu čísel v textu
@@ -83,7 +84,7 @@ if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUse
             if slovo.islower(): #zjištění počtu slov začínajících malým písmenem
                 slovoMalymi += 1
         
-            if slovo.isupper(): #zjištění počtu slov psaných velkým písmem
+            if slovo.isupper() and slovo.isalpha(): #zjištění počtu slov psaných velkým písmem
                 slovoVelkymi += 1
 
         #vypsání výsledků analýzy uživateli 
