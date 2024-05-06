@@ -74,7 +74,7 @@ if userID in RegisteredUserIDs and password == RegisteredPasswords[RegisteredUse
             else:
                 delkySlov[delkaSlova] = 1
         
-            if slovo.istitle(): #zjištění počtu slov začínajících velkým písmenem
+            if slovo.istitle() and slovo[0].isalpha(): #zjištění počtu slov začínajících velkým písmenem
                 zacatecniVelkePismeno += 1
         
             if slovo.isnumeric(): #zjištění počtu čísel v textu
